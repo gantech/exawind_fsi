@@ -1,0 +1,226 @@
+# --- Simulation time control parameters ---
+time.stop_time                           = 20000.0               # Max (simulated) time to evolve [s]
+time.max_step                            = -1                  
+time.fixed_dt                            = 0.005              # Fixed timestep size (in seconds). If negative, then time.cfl is used
+
+incflo.physics                           = ABL        # List of physics models to include in simulation.
+incflo.verbose                           = 1                                    
+incflo.use_godunov                       = true                
+incflo.godunov_type                      = weno_z               
+incflo.gravity                           = 0.0 0.0 -9.81       # Gravitational acceleration vector (x,y,z) [m/s^2]
+incflo.density                           = 1.0637              # Fluid density [kg/m^3]
+transport.viscosity                      = 1.8e-5          # Fluid dynamic viscosity [kg/m-s]
+transport.laminar_prandtl                = 0.7                 # Laminar prandtl number
+transport.turbulent_prandtl              = 0.3333              # Turbulent prandtl number
+                    
+io.plot_file                             = amr-out/plt
+io.check_file                            = amr-out/chk
+time.plot_interval                       = 20
+io.restart_file                          = "chk30000"
+
+#---------------------------------------#
+#               ABL                     #
+#---------------------------------------#
+ICNS.source_terms              = BoussinesqBuoyancy CoriolisForcing BodyForce #ABLForcing # ABLMeanBoussinesq 
+BoussinesqBuoyancy.reference_temperature = 288.15                                         
+
+ABLForcing.abl_forcing_height  = 150
+
+ABL.reference_temperature = 300.0
+ABL.temperature_heights = 0.0 750.0 850.0 2000.0
+ABL.temperature_values = 300.0 300.0 308.0 311.45
+ABL.perturb_temperature = true
+ABL.cutoff_height = 50.0
+ABL.perturb_velocity = true
+ABL.perturb_ref_height = 50.0
+ABL.Uperiods = 4.0
+ABL.Vperiods = 4.0
+ABL.deltaU = 1.0
+ABL.deltaV = 1.0
+ABL.kappa = .41
+ABL.surface_roughness_z0 = 0.01
+ABL.surface_temp_flux = 0.005
+ABL.normal_direction = 2
+ABL.log_law_height = 5.0
+ABL.stats_output_frequency = 1
+ABL.stats_output_format = netcdf
+
+# Coriolis forcing
+CoriolisForcing.east_vector = 1.0 0.0 0.0
+CoriolisForcing.north_vector = 0.0 1.0 0.0
+CoriolisForcing.latitude = 40.0
+CoriolisForcing.turn_off_vertical_force = true
+CoriolisForcing.rotational_time_period = 86400.0
+
+# Body force from precursor
+BodyForce.magnitude                      = -0.000215739323464 0.000737308348903 0.0
+
+incflo.velocity = 6.92820323027551 4.0 0.0
+
+
+#---------------------------------------#
+#         Turbulence                    #
+#---------------------------------------#
+turbulence.model               = OneEqKsgsM84   
+TKE.source_terms               = KsgsM84Src
+ABL.enable_hybrid_rl_mode       = true
+
+
+# --- Geometry and Mesh ---
+#geometry.prob_lo                         = -2560.0 -2560.0 0.0
+#geometry.prob_hi                         = 2560.0 2560.0 1920.0  
+
+geometry.prob_lo        =   0.       0.     0.  # Lo corner coordinates
+geometry.prob_hi        =   5120.  5120.  1920.  # Hi corner coordinates
+
+amr.n_cell                               = 512 512 192           # Number of cells in x, y, and z directions
+
+amr.max_level                            = 5       
+
+#---- tagging defs ----
+tagging.labels = "static"
+tagging.static.type = "CartBoxRefinement"
+tagging.static.static_refinement_def = "static_box.txt"
+
+
+# --- Boundary Conditions ---
+geometry.is_periodic                     = 0 0 0               
+
+xlo.type                                 = mass_inflow         
+xlo.density                              = 1.0                 
+xlo.temperature                          = 0.0                 
+xlo.tke                                  = 0.0                 
+xhi.type                                 = pressure_outflow    
+
+ylo.type                                 = mass_inflow         
+ylo.density                              = 1.0                 
+ylo.temperature                          = 0.0                 
+ylo.tke                                  = 0.0                 
+yhi.type                                 = pressure_outflow   
+
+zlo.type =   "wall_model"
+zlo.temperature_type = "wall_model"
+zhi.type =   "slip_wall"
+zhi.temperature_type = "fixed_gradient"
+zhi.temperature = 0.003
+zlo.tke_type = "zero_gradient"
+
+
+                                      
+io.KE_int                                = -1               
+#incflo.post_processing                   = sampling    
+
+
+#########################################
+# Boundary data sampling for IO         #
+#########################################
+ABL.bndry_file = "bndry_data"
+ABL.bndry_io_mode = 1
+ABL.bndry_planes = xlo ylo
+ABL.bndry_output_start_time = 15000.0
+ABL.bndry_var_names = velocity temperature tke
+ABL.bndry_output_format = native
+
+
+# --- Sampling parameters ---
+#sampling.output_frequency                = 100                 
+#sampling.fields                          = velocity tke sdr            
+
+#---- sample defs ----
+#sampling.labels                          = Farm_hh Farm_xz             
+
+#sampling.Farm_hh.type                    = PlaneSampler        
+#sampling.Farm_hh.num_points              = 257 97             
+#sampling.Farm_hh.origin                  = -1280.0 -480.0 87.6 
+#sampling.Farm_hh.axis1                   = 2560.0 0.0 87.6      
+#sampling.Farm_hh.axis2                   = 0.0 960.0 87.6     
+#sampling.Farm_hh.normal                  = 0.0 0.0 0.0 
+
+#sampling.Farm_xz.type                    = PlaneSampler
+#sampling.Farm_xz.num_points              = 257 97 
+#sampling.Farm_xz.origin                  = -1280.0 0.0 0.0
+#sampling.Farm_xz.axis1                   = 2560.0 0.0 0.0
+#sampling.Farm_xz.axis2                   = 0.0 0.0 960.0
+#sampling.Farm_xz.normal                  = 0.0 0.0 0.0        
+
+
+#---- extra params ----
+
+amr.blocking_factor = 32
+amr.max_grid_size = 64
+
+#########################################
+#                SOLVER                 #
+#########################################
+
+# MLMG settings
+nodal_proj.verbose = 0
+nodal_proj.bottom_verbose  = 0
+nodal_proj.mg_rtol = 1.0e-7
+nodal_proj.mg_atol = 1.0e-10
+nodal_proj.num_pre_smooth = 10
+nodal_proj.num_post_smooth = 10
+nodal_proj.bottom_rtol = 1.0e-9
+nodal_proj.bottom_atol = 1.0e-12
+nodal_proj.bottom_solver = hypre
+nodal_proj.max_coarsening_level = 0
+
+mac_proj.verbose=0
+mac_proj.bottom_verbose  = 0
+mac_proj.bottom_solver = hypre
+mac_proj.max_coarsening_level = 0
+mac_proj.mg_rtol = 1.0e-6
+mac_proj.mg_atol = 1.0e-10
+mac_proj.bottom_rtol = 1.0e-11
+mac_proj.bottom_atol = 1.0e-12
+
+diffusion.verbose=0
+diffusion.do_agglomeration = false
+diffusion.do_nsolve = true
+
+velocity_diffusion.verbose=0
+velocity_diffusion.use_tensor_operator = false
+velocity_diffusion.use_segregated_operator = true
+velocity_diffusion.do_nsolve = true
+
+temperature_diffusion.verbose=0
+temperature_diffusion.do_nsolve=true
+temperature_diffusion.mg_rtol = 1.0e-10
+temperature_diffusion.mg_atol = 1.0e-13
+
+amrex.abort_on_out_of_gpu_memory=1
+amrex.the_arena_is_managed=1
+amrex.fpe_trap_invalid  =   1           # Trap NaNs
+amrex.throw_exception = 1
+amrex.signal_handling = 0
+
+#########################################
+#                 HYPRE                 #
+#########################################
+hypre.bamg_verbose = 0
+hypre.verbose = 0
+hypre.recompute_preconditioner = 0
+hypre.hypre_solver = GMRES
+hypre.hypre_preconditioner = BoomerAMG
+hypre.num_krylov = 20
+hypre.max_iterations = 20
+hypre.rtol = 1.e-5
+hypre.atol = 1.e-8
+hypre.bamg_coarsen_type = 8
+hypre.bamg_interp_type = 6
+hypre.bamg_relax_type = 11
+hypre.bamg_num_sweeps = 2
+hypre.bamg_cycle_type = 1
+hypre.bamg_relax_order = 0
+hypre.bamg_trunc_factor = 0.45
+hypre.bamg_strong_threshold = 0.3
+hypre.bamg_max_levels = 10
+hypre.bamg_agg_num_levels = 3
+hypre.bamg_agg_interp_type = 7
+hypre.bamg_agg_pmax_elmts = 3
+hypre.bamg_pmax_elmts = 3
+hypre.bamg_keep_transpose = 1
+hypre.write_matrix_files = 0
+
+
+#== END AMR-WIND INPUT ==
