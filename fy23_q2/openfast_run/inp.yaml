@@ -5,7 +5,7 @@ sim_start: init
 coupling_mode: strong
 n_iter: 1
 t_start:  0.0
-t_end:    7.947019867549669
+t_end:    7.9470198675496695
 t_max:    794.7019867549669
 dt_driver: 0.005518763796909493
 restart_freq: 1440
