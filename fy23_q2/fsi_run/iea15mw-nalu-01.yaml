@@ -221,20 +221,16 @@ realms:
       use_wall_function: no
       turbulent_ke: 0.0
 
-  - symmetry_boundary_condition: bc_outer
-    target_name: outerBC
-    symmetry_user_data:
-
-  # - overset_boundary_condition: bc_overset
-  #   overset_connectivity_type: tioga
-  #   overset_user_data:
-  #     tioga_populate_inactive_part: false
-  #     mesh_group:
-  #     - overset_name: Turbine
-  #       mesh_parts:
-  #       - fluid-HEX
-  #       wall_parts: [blade1, blade2, blade3]
-  #       ovset_parts: [outerBC]
+  - overset_boundary_condition: bc_overset
+    overset_connectivity_type: tioga
+    overset_user_data:
+      tioga_populate_inactive_part: false
+      mesh_group:
+      - overset_name: Turbine
+        mesh_parts:
+        - fluid-HEX
+        wall_parts: [blade1, blade2, blade3]
+        ovset_parts: [outerBC]
 
   # mesh_motion:
   # - name: blade_rotation
@@ -266,7 +262,7 @@ realms:
     dry_run:  False
     debug:    False
     sim_start: init  #/trueRestart/restartDriverInitFAST
-    t_start: 7.947019867549669
+    t_start: 7.9470198675496695
     t_max: 794.7019867549669
     n_checkpoint: 1440
     dt_FAST: 0.0013796909492273732
@@ -402,8 +398,8 @@ Time_Integrators:
 - StandardTimeIntegrator:
     name: ti_1
     start_time: 0
-    time_step: 0.0013796909492273732
-    termination_step_count: 0
+    time_step: 0.005518763796909493
+    termination_step_count: 36000
     time_stepping_type: fixed
     time_step_count: 0
     second_order_accuracy: yes
