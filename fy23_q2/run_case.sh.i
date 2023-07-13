@@ -1,10 +1,10 @@
 #!/bin/bash 
 #SBATCH -A hfm
-#SBATCH -o ws_{WIND_SPEED}_log.o%j
+#SBATCH -o ws_{WIND_SPEED}_log_%j.out
 #SBATCH -J iea15mw_ws{WIND_SPEED}
 #SBATCH -t 48:00:0
-#SBATCH -p batch
 #SBATCH -N 32
+#SBATCH --qos=high
 {if(EMAIL)}
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user={EMAIL}
