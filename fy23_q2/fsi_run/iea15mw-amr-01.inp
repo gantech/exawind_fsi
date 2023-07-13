@@ -43,7 +43,7 @@ ConstValue.tke.value = 1.0
 FreeStream.sdr_type = ConstValue
 ConstValue.sdr.value = 250.0
 FreeStream.velocity_type = ConstValue
-ConstValue.velocity.value = 8.0 0.0 0.0
+ConstValue.velocity.value = {WIND_SPEED} 0.0 0.0
 
 FreeStream.fields = wall_dist
 FreeStream.wall_dist_type = ConstValue

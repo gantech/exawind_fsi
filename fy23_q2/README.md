@@ -2,7 +2,13 @@ Steps to run IEA 15-MW FSI simulations
 
 The OpenFAST setup of the IEA 15-MW turbine is based on v1.1.6 adapted to run with OpenFAST 3.0. See branch here https://github.com/gantech/IEA-15-240-RWT/tree/v1.1.6_of3.0
 
-1. Run OpenFAST using the C++ API inside the `openfast_run` folder like so `openfastcpp inp.yaml`. This runs OpenFAST with AeroDyn for 1 revolution at 15m/s. OpenFAST is set to blend from BEM (AeroDyn) to CFD loads at 3 revolutions over 1/4th of a revolution.
+1. Run the `setup_case.sh` script and supply a wind speed.
+
+``` shell
+./setup_case.sh -w 8.0
+```
+
+This will parse the wind speed into the input files consistently and run standalone openfast in new directory `wind_speed_8.0`.
 
 2. Copy the `.chkp`, `.dll.chp`, and `.nc` files to the `fsi_run` folder and run the `exawind` solver like so
 
@@ -18,8 +24,8 @@ Shreyas - 7,9
 
 4. Timesteps are dialed at rated rpm - 0.25 degree rotation for CFD - 1/16th of a degree for OpenFAST. Suggest keeping this fixed for all cases. We may have more time steps per revolution for Region II.
 
-5. Mesh is here - /projects/hfm/gvijayak/IEA15MW/mesh/iea15mw_volume.exo
+5. Mesh is here - /projects/hfm/gvijayak/IEA15MW/mesh/iea15mw_volume.exo which is the default for the setup script but can be changed dynamically by giving the setup script a different mesh location i.e. `-m=/some/new/location`
 
-6. Phil will compile a common version of exawind + fsi for all of us to use on /projects/exawind
+6. Phil will compile a common version of exawind + fsi for all of us to use on /projects/exawind 
 
 

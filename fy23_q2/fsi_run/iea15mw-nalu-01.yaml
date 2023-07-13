@@ -143,7 +143,7 @@ linear_solvers:
 realms:
 
 - name: realm_1
-  mesh: mesh/iea15mw_volume.exo
+  mesh: {MESH}
   use_edges: yes
 
   equation_systems:
@@ -184,7 +184,7 @@ realms:
     - blade3-HEX
     value:
       pressure: 0
-      velocity: [8.0, 0.0, 0.0]
+      velocity: [{WIND_SPEED} 0.0, 0.0]
       turbulent_ke: 0.095118
       specific_dissipation_rate: 2266.4
 
@@ -282,7 +282,7 @@ realms:
         - ["blade3"]
       az_blend_mean: 18.84955592153876
       az_blend_delta: 1.5707963267948966
-      vel_mean: 8.0
+      vel_mean: {WIND_SPEED}
       wind_dir: 270.0
       z_ref: 150.0
       shear_exp: 0.0
