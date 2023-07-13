@@ -16,6 +16,10 @@ This will parse the wind speed into the input files consistently and run standal
 srun -n 1152 exawind --nwind 360 --awind 792 iea15mw-01.yaml &> log
 ```
 
+This command will be embedded into a template submission script inside the run directory with the name `run_case.sh` which you can edit as needed.
+If you want an automated submission for eagle just include the `-s=True` flag to the setup script.  You can also provide your email to get notificaitons with the `-e=[your email address]` flag.
+
+
 3. Need to run a power curve - Suggested wind speeds are 5,6,7,8,9,10,10.59,12,14,17,20,23,25 - Total of 13 simulations. Start with 8, 10.59, 15 and then fill out other wind speeds as we see fit. 
 
 Nate - 8.0, 10.59
