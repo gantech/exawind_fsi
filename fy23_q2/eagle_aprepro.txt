@@ -1,0 +1,10 @@
+{SLURM_ARGS = '
+#SBATCH -A hfm
+#SBATCH -t 48:00:0
+#SBATCH -N 32
+#SBATCH --qos=high'}
+
+{MACHINE_NAME=eagle}
+{NALU_NODES=10}
+{MESH=/projects/hfm/gvijayak/IEA15MW/mesh/iea15mw_volume.exo}
+
