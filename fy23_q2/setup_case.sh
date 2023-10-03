@@ -1,10 +1,10 @@
-# must load things so that aprepro is active in the shell
-source ${SPACK_MANAGER_MACHINE}_setup_env.sh
-# machine specific params i.e. mesh/restart/etc
-aprepro_include=$(pwd)/${SPACK_MANAGER_MACHINE}_aprepro.txt
 
 for i in "$@"; do
     case "$1" in
+        -m=*|--machine=*)
+            MACHINE="${i#*=}"
+            shift # past argument=value
+            ;;
         -w=*|--wind_speed=*)
             WIND_SPEED="${i#*=}"
             shift # past argument=value
@@ -23,7 +23,11 @@ for i in "$@"; do
             ;;
     esac
 done
+# must load things so that aprepro is active in the shell
+# machine specific params i.e. mesh/restart/etc
+aprepro_include=$(pwd)/${MACHINE}_aprepro.txt
 
+source ${MACHINE}_setup_env.sh
 target_dir=wind_speed_$WIND_SPEED
 mkdir -p $target_dir
 cp -R openfast_run/* $target_dir
