@@ -5,4 +5,4 @@
 
 {MACHINE_NAME=snl-hpc}
 {NALU_NODES=10}
-{MESH=/projects/wind/meshes/split/iea15mw/iea15mw_volume.exo}
+{MESH=/projects/wind/meshes/split/iea15mw/iea15mw_3blade_volume.exo}
