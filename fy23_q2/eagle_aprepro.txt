@@ -7,4 +7,4 @@
 {MACHINE_NAME=eagle}
 {NALU_NODES=10}
 {MESH=/projects/hfm/gvijayak/IEA15MW/mesh/iea15mw_volume.exo}
-
+{DLL="../IEA-15-240-RWT/ServoData/libdiscon.so"}

@@ -35,12 +35,10 @@ cp -R fsi_run/* $target_dir
 cd $target_dir
 # text replace the wind speed and mesh location in these files
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
+aprepro -qW --include ${aprepro_include} IEA-15-240-RWT-Monopile_ServoDyne.dat IEA-15-240-RWT-Monopile_ServoDyne.dat
 aprepro -qW WIND_SPEED=$WIND_SPEED iea15mw-amr-01.inp iea15mw-amr-01.inp 
 aprepro -qW WIND_SPEED=$WIND_SPEED inp.yaml inp.yaml  
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL ../run_case.sh.i run_case.sh
-# TODO compile the controller?
-# run the openfast precursor for this file
-openfastcpp inp.yaml
 # submit case if submit flag given
 if [ -n "${SUBMIT}" ]; then
 sbatch run_case.sh
