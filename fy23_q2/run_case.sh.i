@@ -8,11 +8,11 @@
 {endif}
 
 nodes=$SLURM_JOB_NUM_NODES
-ranks=$SLURM_NTASKS
-rpn=$SLURM_JOB_SPUS_PER_NODE
+rpn={RANKS_PER_NODE}
+ranks=$(( $rpn*$nodes ))
 
 nalu_ranks=$(( {NALU_NODES}*$rpn ))
-amr_ranks=$(( $ranks-$nalu_ranks ))
+amr_ranks=$(( ($nodes-{NALU_NODES})*$rpn ))
 
 # load the modules with exawind executable/setup the run env
 # MACHINE_NAME will get populated via aprepro
