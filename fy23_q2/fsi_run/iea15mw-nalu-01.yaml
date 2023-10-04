@@ -144,6 +144,9 @@ realms:
 
 - name: realm_1
   mesh: {MESH}
+  automatic_decomposition_type: rcb
+  rebalance_mesh: yes
+  stk_rebalance_method: parmetis
   use_edges: yes
 
   equation_systems:
@@ -184,7 +187,7 @@ realms:
     - blade3-HEX
     value:
       pressure: 0
-      velocity: [{WIND_SPEED} 0.0, 0.0]
+      velocity: [{WIND_SPEED}, 0.0, 0.0]
       turbulent_ke: 0.095118
       specific_dissipation_rate: 2266.4
 
@@ -228,20 +231,11 @@ realms:
       mesh_group:
       - overset_name: Turbine
         mesh_parts:
-        - fluid-HEX
+        - blade1-HEX
+        - blade2-HEX
+        - blade3-HEX
         wall_parts: [blade1, blade2, blade3]
         ovset_parts: [outerBC]
-
-  # mesh_motion:
-  # - name: blade_rotation
-  #   mesh_parts:
-  #   - fluid-HEX
-  #   frame: non_inertial
-  #   motion:
-  #   - type: rotation
-  #     axis: [ 1.0, 0.0, 0.0 ]
-  #     omega: 0.5951925584724168
-  #     centroid: [0.0, 0.0, 0.0]
 
   mesh_transformation:
   - name: rotation
@@ -261,7 +255,7 @@ realms:
     n_turbines_glob: 1
     dry_run:  False
     debug:    False
-    sim_start: init  #/trueRestart/restartDriverInitFAST
+    sim_start: trueRestart  #/trueRestart/restartDriverInitFAST
     t_start: 7.9470198675496695
     t_max: 794.7019867549669
     n_checkpoint: 1440
