@@ -18,6 +18,7 @@ amr_ranks=$(( $ranks-$nalu_ranks ))
 # MACHINE_NAME will get populated via aprepro
 source ../{MACHINE_NAME}_setup_env.sh
 
+srun -N 1 -n 1 openfastcpp inp.yaml
 srun -N $nodes -n $ranks \
   exawind --nwind $nalu_ranks \
   --awind $amr_ranks iea15mw-01.yaml &> log

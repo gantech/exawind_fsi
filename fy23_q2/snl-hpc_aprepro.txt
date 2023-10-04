@@ -3,6 +3,6 @@
 #SBATCH -t 48:00:00
 #SBATCH -N 32'}
 
-{MACHINE_NAME=snl-hpc}
+{MACHINE_NAME="snl-hpc"}
 {NALU_NODES=10}
-{MESH=/projects/wind/meshes/split/iea15mw/iea15mw_3blade_volume.exo}
+{MESH="/projects/wind/meshes/split/iea15mw/iea15mw_3blade_volume.exo"}
