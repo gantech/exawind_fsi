@@ -151,7 +151,7 @@ realms:
 
   equation_systems:
     name: theEqSys
-    max_iterations: 0
+    max_iterations: 2
     decoupled_overset_solve: yes
 
     solver_system_specification:
