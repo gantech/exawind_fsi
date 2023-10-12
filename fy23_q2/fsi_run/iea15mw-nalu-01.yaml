@@ -235,7 +235,7 @@ realms:
         - blade2-HEX
         - blade3-HEX
         wall_parts: [blade1, blade2, blade3]
-        ovset_parts: [outerBC]
+        ovset_parts: [outerbcblade1, outerbcblade2, outerbcblade3]
 
   mesh_transformation:
   - name: rotation
@@ -284,7 +284,7 @@ realms:
       deflection_ramping:
         enable_span_ramping: false
         enable_theta_ramping: false
-        enable_temporal_ramping: true
+        enable_temporal_ramping: false
         temporal_ramp_start: 0.0
         temporal_ramp_end: 0.5
       
@@ -368,6 +368,18 @@ realms:
     restart_frequency: 360
     restart_start: 0
       # restart_time: 540.0
+
+  sideset_writers:
+  - name: boundary_output
+    output_data_base_name: blades01/blades.exo
+    output_frequency: 16
+    target_name: [blade1, blade2, blade3]
+    output_variables:
+    - pressure
+    - pressure_force
+    - viscous_force
+    - tau_wall
+    - mesh_displacement
 
   output:
     output_data_base_name: out01/iea15mw.e
