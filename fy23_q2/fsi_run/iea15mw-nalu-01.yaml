@@ -229,13 +229,18 @@ realms:
     overset_user_data:
       tioga_populate_inactive_part: false
       mesh_group:
-      - overset_name: Turbine
-        mesh_parts:
-        - blade1-HEX
-        - blade2-HEX
-        - blade3-HEX
-        wall_parts: [blade1, blade2, blade3]
-        ovset_parts: [outerbcblade1, outerbcblade2, outerbcblade3]
+      - overset_name: b1ovr
+        mesh_parts: [blade1-HEX]
+        wall_parts: [blade1]
+        ovset_parts: [outerbcblade1]
+      - overset_name: b2ovr
+        mesh_parts: [blade2-HEX]
+        wall_parts: [blade2]
+        ovset_parts: [outerbcblade2]
+      - overset_name: b3ovr
+        mesh_parts: [blade3-HEX]
+        wall_parts: [blade3]
+        ovset_parts: [outerbcblade3]
 
   mesh_transformation:
   - name: rotation
