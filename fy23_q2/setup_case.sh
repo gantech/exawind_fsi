@@ -27,7 +27,7 @@ done
 # machine specific params i.e. mesh/restart/etc
 aprepro_include=$(pwd)/${MACHINE}_aprepro.txt
 
-source ${MACHINE}_setup_env.sh
+source $(pwd)/${MACHINE}_setup_env.sh
 target_dir=wind_speed_$WIND_SPEED
 mkdir -p $target_dir
 cp -R openfast_run/* $target_dir
