@@ -5,7 +5,6 @@
 #SBATCH --qos=high'}
 
 {MACHINE_NAME=eagle}
-{NALU_NODES=10}
-{RANKS_PER_NODE=36}
+{NALU_RANK_PERCENTAGE=25}
 {MESH=/projects/hfm/gvijayak/IEA15MW/mesh/iea15mw_volume.exo}
 {DLL="../IEA-15-240-RWT/ServoData/libdiscon.so"}

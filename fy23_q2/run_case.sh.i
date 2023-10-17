@@ -7,16 +7,16 @@
 #SBATCH --mail-user={EMAIL}
 {endif}
 
-nodes=$SLURM_JOB_NUM_NODES
-rpn={RANKS_PER_NODE}
-ranks=$(( $rpn*$nodes ))
-
-nalu_ranks=$(( {NALU_NODES}*$rpn ))
-amr_ranks=$(( ($nodes-{NALU_NODES})*$rpn ))
-
 # load the modules with exawind executable/setup the run env
 # MACHINE_NAME will get populated via aprepro
 source ../{MACHINE_NAME}_setup_env.sh
+
+nodes=$SLURM_JOB_NUM_NODES
+rpn=$(ranks_per_node)
+ranks=$(( $rpn*$nodes ))
+
+nalu_ranks=$(( $ranks*{NALU_RANK_PERCENTAGE}/100 ))
+amr_ranks=$(( ($ranks-$nalu_ranks ))
 
 srun -N 1 -n 1 openfastcpp inp.yaml
 srun -N $nodes -n $ranks \
