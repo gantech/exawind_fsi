@@ -8,3 +8,5 @@
 {NALU_RANK_PERCENTAGE=25}
 {MESH=/projects/hfm/gvijayak/IEA15MW/mesh/iea15mw_volume.exo}
 {DLL="../IEA-15-240-RWT/ServoData/libdiscon.so"}
+
+{CLEANUP_ARGS = ''}

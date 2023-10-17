@@ -16,7 +16,7 @@ rpn=$(ranks_per_node)
 ranks=$(( $rpn*$nodes ))
 
 nalu_ranks=$(( ($ranks*{NALU_RANK_PERCENTAGE})/100 ))
-amr_ranks=$(( ($ranks-$nalu_ranks ))
+amr_ranks=$(( $ranks-$nalu_ranks ))
 
 srun -N 1 -n 1 openfastcpp inp.yaml
 srun -N $nodes -n $ranks \
@@ -30,3 +30,4 @@ mv *.log run_$SLURM_JOBID
 mv *_log_* run_$SLURM_JOBID
 mv timings.dat run_$SLURM_JOBID
 mv forces*dat run_$SLURM_JOBID
+{CLEANUP_ARGS}
