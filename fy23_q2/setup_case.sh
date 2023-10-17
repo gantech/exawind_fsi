@@ -49,5 +49,9 @@ aprepro -qW WIND_SPEED=$WIND_SPEED inp.yaml inp.yaml
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL ../run_case.sh.i run_case.sh
 # submit case if submit flag given
 if [ -n "${SUBMIT}" ]; then
-sbatch run_case.sh
+  if [ "${MACHINE}"=="snl-hpc" ]; then
+    sbatch -M attaway,chama,skybridge run_case.sh
+  else
+    sbatch run_case.sh
+  fi
 fi
