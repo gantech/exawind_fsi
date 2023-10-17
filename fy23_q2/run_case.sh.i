@@ -1,7 +1,7 @@
 #!/bin/bash 
 {SLURM_ARGS}
-#SBATCH -o ws_{WIND_SPEED}_log_%j.out
-#SBATCH -J iea15mw_ws{WIND_SPEED}
+#SBATCH -o ws{WIND_SPEED}_log_%j.out
+#SBATCH -J ws{WIND_SPEED}_iea15mw
 {if(EMAIL)}
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user={EMAIL}
