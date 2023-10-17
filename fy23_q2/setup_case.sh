@@ -23,19 +23,27 @@ for i in "$@"; do
             ;;
     esac
 done
+
 # must load things so that aprepro is active in the shell
 # machine specific params i.e. mesh/restart/etc
 aprepro_include=$(pwd)/${MACHINE}_aprepro.txt
-
 source $(pwd)/${MACHINE}_setup_env.sh
+
+# define rpm and pitch inputs for this wind speed
+rpm_pitch=$(./process_turbine_params.py ${WIND_SPEED})
+rpm=$(echo "$rpm_pitch" | awk '{print $1}')
+pitch=$(echo "$rpm_pitch" | awk '{print $2}')
+
 target_dir=wind_speed_$WIND_SPEED
 mkdir -p $target_dir
 cp -R openfast_run/* $target_dir
 cp -R fsi_run/* $target_dir
 cd $target_dir
+
 # text replace the wind speed and mesh location in these files
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
 aprepro -qW --include ${aprepro_include} IEA-15-240-RWT-Monopile_ServoDyn.dat IEA-15-240-RWT-Monopile_ServoDyn.dat
+aprepro -qW RPM=$rpm PITCH=$pitch  IEA-15-240-RWT-Monopile_ElastoDyn.dat IEA-15-240-RWT-Monopile_ElastoDyn.dat
 aprepro -qW WIND_SPEED=$WIND_SPEED iea15mw-amr-01.inp iea15mw-amr-01.inp 
 aprepro -qW WIND_SPEED=$WIND_SPEED inp.yaml inp.yaml  
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL ../run_case.sh.i run_case.sh
