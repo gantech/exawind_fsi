@@ -15,7 +15,7 @@ nodes=$SLURM_JOB_NUM_NODES
 rpn=$(ranks_per_node)
 ranks=$(( $rpn*$nodes ))
 
-nalu_ranks=$(( $ranks*{NALU_RANK_PERCENTAGE}/100 ))
+nalu_ranks=$(( ($ranks*{NALU_RANK_PERCENTAGE})/100 ))
 amr_ranks=$(( ($ranks-$nalu_ranks ))
 
 srun -N 1 -n 1 openfastcpp inp.yaml
