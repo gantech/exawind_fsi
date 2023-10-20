@@ -25,7 +25,7 @@ incflo.initial_iterations = 3
 #.......................................#
 incflo.gravity  =  0.0  0.0 -9.81  # Gravitational force (3D)
 incflo.density  =  1.225           # Reference density
-incflo.velocity = 8.0 0.0 0.0
+incflo.velocity = {WIND_SPEED} 0.0 0.0
 incflo.use_godunov = 1
 incflo.godunov_type = "ppm"
 
@@ -39,9 +39,9 @@ SDR.source_terms = SDRSrc
 incflo.physics = FreeStream 
 
 FreeStream.tke_type = ConstValue
-ConstValue.tke.value = 1.0
+ConstValue.tke.value = 0.24
 FreeStream.sdr_type = ConstValue
-ConstValue.sdr.value = 250.0
+ConstValue.sdr.value = 1600.0
 FreeStream.velocity_type = ConstValue
 ConstValue.velocity.value = {WIND_SPEED} 0.0 0.0
 

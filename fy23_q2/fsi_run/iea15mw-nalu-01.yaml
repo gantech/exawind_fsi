@@ -189,8 +189,8 @@ realms:
     value:
       pressure: 0
       velocity: [{WIND_SPEED}, 0.0, 0.0]
-      turbulent_ke: 0.095118
-      specific_dissipation_rate: 2266.4
+      turbulent_ke: 0.24
+      specific_dissipation_rate: 1600.0
 
   material_properties:
     target_name:
