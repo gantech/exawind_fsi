@@ -6,8 +6,7 @@ time.max_step                =   -1          # Max number of time steps
 #.......................................#
 #         TIME STEP COMPUTATION         #
 #.......................................#
-time.fixed_dt         =   0.007330943688517292      # Use this constant dt if > 0
-#time.fixed_dt         =   0.003665471844258646
+time.fixed_dt         =   {CFD_DT}     # Use this constant dt if > 0
 time.cfl              =   1.0       # CFL factor
 #.......................................#
 #            INPUT AND OUTPUT           #
@@ -66,9 +65,9 @@ geometry.is_periodic    =   0   0   0   # Periodicity x y z (0/1)
 # Boundary conditions
 xlo.type = "mass_inflow"
 xlo.density = 1.225
-xlo.velocity = 8.0 0.0 0.0
-xlo.tke = 0.095118
-xlo.sdr = 250.0
+xlo.velocity = {WIND_SPEED} 0.0 0.0
+xlo.tke = 0.24
+xlo.sdr = 1600.0
 xhi.type = "pressure_outflow"
 ylo.type = "slip_wall"
 yhi.type = "slip_wall"

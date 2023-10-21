@@ -5,9 +5,9 @@ sim_start: init
 coupling_mode: strong
 n_iter: 1
 t_start:  0.0
-t_end:    7.9470198675496695
-t_max:    794.7019867549669
-dt_driver: 0.005518763796909493
+t_end:    {ONE_REV}
+t_max:    {HUN_REV}
+dt_driver: {CFD_DT}
 restart_freq: 1440
 output_freq: 1
 set_exp_law_wind: False
