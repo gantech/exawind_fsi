@@ -262,10 +262,10 @@ realms:
     dry_run:  False
     debug:    False
     sim_start: trueRestart  #/trueRestart/restartDriverInitFAST
-    t_start: 7.9470198675496695
-    t_max: 794.7019867549669
+    t_start: {ONE_REV}
+    t_max: {HUN_REV}
     n_checkpoint: 1440
-    dt_FAST: 0.00013796909492273732
+    dt_FAST: {OPENFAST_DT}
     Turbine0:
       turbine_base_pos: [12.097572172848082, 0.0, -148.73545941424806]
       turbine_hub_pos: [0.0, 0.0, 0.0]
@@ -411,7 +411,7 @@ Time_Integrators:
 - StandardTimeIntegrator:
     name: ti_1
     start_time: 0
-    time_step: 0.005518763796909493
+    time_step: {CFD_DT}
     termination_step_count: 36000
     time_stepping_type: fixed
     time_step_count: 0

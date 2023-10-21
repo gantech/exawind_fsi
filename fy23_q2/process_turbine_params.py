@@ -2,6 +2,7 @@
 
 import csv
 import sys
+import math 
 
 def linear_interpolation(param, data):
     # Sort the data by the first column
@@ -20,6 +21,15 @@ def linear_interpolation(param, data):
 
     return interpolated_rpm, interpolated_pitch
 
+def calc_timesteps(rpm):
+    rotdeg = rpm * 360.0 / 60.0
+    cfd_dt = 0.25/rotdeg
+    ratio = 3*math.ceil(rotdeg) - 30
+    openfast_dt = cfd_dt / ratio
+    one_rev = math.ceil((60.0 / rpm) / openfast_dt) * openfast_dt
+
+    return cfd_dt, openfast_dt, one_rev
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("This script requires a single wind speed value as an input.")
@@ -35,5 +45,6 @@ if __name__ == "__main__":
            speed, rpm, pitch = map(float, row)
            data.append((speed, rpm, pitch))
        designRPM, designPitch = linear_interpolation(wind_speed, data)
-       print(designRPM, designPitch)
+       cfdDt, openfastDt, oneRev = calc_timesteps(designRPM)
+       print(designRPM, designPitch, f"{cfdDt:.17f}", f"{openfastDt:.17f}", f"{oneRev:.18f}", f"{oneRev*100:.18f}")
 
