@@ -46,5 +46,5 @@ if __name__ == "__main__":
            data.append((speed, rpm, pitch))
        designRPM, designPitch = linear_interpolation(wind_speed, data)
        cfdDt, openfastDt, oneRev = calc_timesteps(designRPM)
-       print(designRPM, designPitch, f"{cfdDt:.17f}", f"{openfastDt:.17f}", f"{oneRev:.18f}", f"{oneRev*100:.18f}")
+       print(designRPM, designPitch, f"{cfdDt:.17f}", f"{openfastDt:.17f}", f"{oneRev:.18f}", f"{oneRev*100:.18f}", int(oneRev/openfastDt))
 
