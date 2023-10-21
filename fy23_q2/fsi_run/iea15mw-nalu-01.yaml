@@ -269,7 +269,7 @@ realms:
     Turbine0:
       turbine_base_pos: [12.097572172848082, 0.0, -148.73545941424806]
       turbine_hub_pos: [0.0, 0.0, 0.0]
-      restart_filename: "IEA-15-240-RWT-Monopile.5760"
+      restart_filename: "IEA-15-240-RWT-Monopile.{CHKP_NUM}"
       #FAST_input_filename: "turbine_data/IEA-15-240-RWT-Monopile.fst"
       sim_type: "ext-loads"
       blade_parts:

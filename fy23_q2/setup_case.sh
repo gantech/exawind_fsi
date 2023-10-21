@@ -37,6 +37,7 @@ cfd_dt=$(echo "$rpm_pitch_time" | awk '{print $3}')
 openfast_dt=$(echo "$rpm_pitch_time" | awk '{print $4}')
 one_rev=$(echo "$rpm_pitch_time" | awk '{print $5}')
 hun_rev=$(echo "$rpm_pitch_time" | awk '{print $6}')
+chkp_num=$(echo "$rpm_pitch_time" | awk '{print $7}')
 
 target_dir=wind_speed_$WIND_SPEED
 mkdir -p $target_dir
@@ -46,7 +47,7 @@ cd $target_dir
 
 # text replace the wind speed and mesh location in these files
 # cfd input file replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=\"$cfd_dt\" ONE_REV=\"$one_rev\" HUN_REV=\"$hun_rev\" OPENFAST_DT=\"$openfast_dt\" iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=\"$cfd_dt\" ONE_REV=\"$one_rev\" HUN_REV=\"$hun_rev\" OPENFAST_DT=\"$openfast_dt\" CHKP_NUM=\"$chkp_num\" iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
 aprepro -qW WIND_SPEED=$WIND_SPEED CFD_DT=\"$cfd_dt\" iea15mw-amr-01.inp iea15mw-amr-01.inp 
 
 # openfast model replacements
