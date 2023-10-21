@@ -27,7 +27,7 @@ def calc_timesteps(rpm):
     ratio = 3*math.ceil(rotdeg) - 30
     openfast_dt = cfd_dt / ratio
     one_rev = math.ceil((60.0 / rpm) / openfast_dt) * openfast_dt
-    
+
     return cfd_dt, openfast_dt, one_rev
 
 if __name__ == "__main__":
@@ -46,5 +46,5 @@ if __name__ == "__main__":
            data.append((speed, rpm, pitch))
        designRPM, designPitch = linear_interpolation(wind_speed, data)
        cfdDt, openfastDt, oneRev = calc_timesteps(designRPM)
-       print(designRPM, designPitch, f"{cfdDt:.17f}", f"{openfastDt:.17f}", f"{oneRev:.18f}")
+       print(designRPM, designPitch, f"{cfdDt:.17f}", f"{openfastDt:.17f}", f"{oneRev:.18f}", f"{oneRev*100:.18f}")
 
