@@ -10,3 +10,4 @@
 {DLL="../IEA-15-240-RWT/ServoData/libdiscon.so"}
 
 {CLEANUP_ARGS = ''}
+{_FORMAT="%.18g"}

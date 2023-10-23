@@ -33,7 +33,7 @@ False                  Echo        - Echo input data to <RootName>.ech (flag)
 ---------------------- OUTPUT --------------------------------------------------
 False                  SumPrint    - Print summary data to "<RootName>.sum" (flag)
 10.0                   SttsTime    - Amount of time between screen status messages (s)
-99999.0                ChkptTime   - Amount of time between creating checkpoint files for potential restart (s)
+1.0                    ChkptTime   - Amount of time between creating checkpoint files for potential restart (s)
 "default"              DT_Out      - Time step for tabular output (s) (or "default")
 0.0                    TStart      - Time to begin tabular output (s)
 3                      OutFileFmt  - Format for tabular (time-marching) output file (switch) [1: text file [<RootName>.out], 2: binary file [<RootName>.outb], 3: both]
