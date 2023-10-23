@@ -5,7 +5,7 @@ sim_start: init
 coupling_mode: strong
 n_iter: 1
 t_start:  0.0
-t_end:    {CFD_DT*(1440+10)} # do 10 extra steps to make sure we get chkp file
+t_end:    {CFD_DT * ( 1440 + 10 )} # do 10 extra steps to make sure we get chkp file
 t_max:    {CFD_DT*14400}
 dt_driver: {CFD_DT}
 restart_freq: 1440

@@ -179,14 +179,14 @@ realms:
     dry_run:  False
     debug:    False
     sim_start: trueRestart  #/trueRestart/restartDriverInitFAST
-    t_start: {1440*CFD_DT} # one rev
-    t_max: {14400*CFD_DT} # 100 rev
+    t_start: { 1440 * CFD_DT } # one rev
+    t_max: { 14400 * CFD_DT } # 100 rev
     n_checkpoint: 1440
     dt_FAST: {OPENFAST_DT}
     Turbine0:
       turbine_base_pos: [12.097572172848082, 0.0, -148.73545941424806]
       turbine_hub_pos: [0.0, 0.0, 0.0]
-      restart_filename: "IEA-15-240-RWT-Monopile.{CHKP_NUM}"
+      restart_filename: "IEA-15-240-RWT-Monopile.1440"
       #FAST_input_filename: "turbine_data/IEA-15-240-RWT-Monopile.fst"
       sim_type: "ext-loads"
       blade_parts:
