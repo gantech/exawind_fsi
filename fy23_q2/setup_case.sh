@@ -45,16 +45,16 @@ cd $target_dir
 
 # text replace the wind speed and mesh location in these files
 # cfd input file replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=$openfast_dt iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
-aprepro -qW WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt iea15mw-amr-01.inp iea15mw-amr-01.inp 
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=$openfast_dt CHKP_NUM=$chkp_num iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=\"$cfd_dt\" iea15mw-amr-01.inp iea15mw-amr-01.inp 
 
 # openfast model replacements
 aprepro -qW --include ${aprepro_include} IEA-15-240-RWT-Monopile_ServoDyn.dat IEA-15-240-RWT-Monopile_ServoDyn.dat
-aprepro -qW RPM=$rpm PITCH=$pitch  IEA-15-240-RWT-Monopile_ElastoDyn.dat IEA-15-240-RWT-Monopile_ElastoDyn.dat
-aprepro -qW OPENFAST_DT=\"$openfast_dt\" IEA-15-240-RWT-Monopile.fst IEA-15-240-RWT-Monopile.fst
+aprepro -qW --include ${aprepro_include} RPM=$rpm PITCH=$pitch  IEA-15-240-RWT-Monopile_ElastoDyn.dat IEA-15-240-RWT-Monopile_ElastoDyn.dat
+aprepro -qW --include ${aprepro_include} OPENFAST_DT=\"$openfast_dt\" IEA-15-240-RWT-Monopile.fst IEA-15-240-RWT-Monopile.fst
 
 # openfastcpp input replacements 
-aprepro -qW WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt inp.yaml inp.yaml
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt ONE_REV=$one_rev HUN_REV=\"$hun_rev\" inp.yaml inp.yaml
 
 # submit script replacements
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL ../run_case.sh.i run_case.sh

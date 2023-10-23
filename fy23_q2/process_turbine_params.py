@@ -26,7 +26,7 @@ def calc_timesteps(rpm):
     cfd_dt = 0.25/rotdeg
     # ratio of 100 matches tests by neil for the 10.59 m/s case
     # using 120 just to be safe for higher wind speeds
-    ratio = 3*int(math.ceil(rotdeg/10.0)*10) - 30
+    ratio = int(3*math.ceil(rotdeg) - 30)
     openfast_dt = cfd_dt / ratio
 
     return cfd_dt, openfast_dt

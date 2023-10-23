@@ -13,3 +13,4 @@
 chown $USER:wg-sierra-users .
 chmod g+s .
 '}
+{_FORMAT="%.18g"}
