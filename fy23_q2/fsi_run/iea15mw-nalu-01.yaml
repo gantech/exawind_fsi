@@ -179,8 +179,8 @@ realms:
     dry_run:  False
     debug:    False
     sim_start: trueRestart  #/trueRestart/restartDriverInitFAST
-    t_start: {ONE_REV}
-    t_max: {HUN_REV}
+    t_start: {1440*CFD_DT} # one rev
+    t_max: {14400*CFD_DT} # 100 rev
     n_checkpoint: 1440
     dt_FAST: {OPENFAST_DT}
     Turbine0:

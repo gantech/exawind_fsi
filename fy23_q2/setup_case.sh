@@ -35,9 +35,7 @@ rpm=$(echo "$rpm_pitch_time" | awk '{print $1}')
 pitch=$(echo "$rpm_pitch_time" | awk '{print $2}')
 cfd_dt=$(echo "$rpm_pitch_time" | awk '{print $3}')
 openfast_dt=$(echo "$rpm_pitch_time" | awk '{print $4}')
-one_rev=$(echo "$rpm_pitch_time" | awk '{print $5}')
-hun_rev=$(echo "$rpm_pitch_time" | awk '{print $6}')
-chkp_num=$(echo "$rpm_pitch_time" | awk '{print $7}')
+chkp_num=$(echo "$rpm_pitch_time" | awk '{print $5}')
 
 target_dir=wind_speed_$WIND_SPEED
 mkdir -p $target_dir
