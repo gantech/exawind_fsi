@@ -25,6 +25,10 @@ for i in "$@"; do
             RUNPRECURSOR="${i#*=}"
             shift # past argument=value
             ;;
+        -n=*|--numnodes=*)
+            NUMNODES="${i#*=}"
+            shift # past argument=value
+            ;;
         --)
             shift
             break
@@ -51,6 +55,14 @@ cp -R openfast_run/* $target_dir
 cp -R fsi_run/* $target_dir
 cd $target_dir
 
+# If just a precursor run, use only single node per job
+if [ "$RUNCFD" -eq 1 ] ; then
+    echo "Not changing NUMNODES"
+else 
+    echo "Running on single nodes, precursor only"
+    NUMNODES=1
+fi
+
 # text replace the wind speed and mesh location in these files
 # cfd input file replacements
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=$openfast_dt CHKP_NUM=$chkp_num iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
@@ -65,7 +77,7 @@ aprepro -qW --include ${aprepro_include} OPENFAST_DT=\"$openfast_dt\" IEA-15-240
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt ONE_REV=$one_rev HUN_REV=\"$hun_rev\" inp.yaml inp.yaml
 
 # submit script replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL RUN_PRE=$RUNPRECURSOR RUN_CFD=$RUNCFD ../run_case.sh.i run_case.sh
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL RUN_PRE=$RUNPRECURSOR RUN_CFD=$RUNCFD NNODES=$NUMNODES ../run_case.sh.i run_case.sh
 
 # submit case if submit flag given
 if [ -n "${SUBMIT}" ]; then

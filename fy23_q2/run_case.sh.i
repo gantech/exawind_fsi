@@ -6,6 +6,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user={EMAIL}
 {endif}
+#SBATCH -N {NNODES}
 
 # load the modules with exawind executable/setup the run env
 # MACHINE_NAME will get populated via aprepro
