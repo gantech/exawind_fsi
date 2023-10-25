@@ -17,6 +17,14 @@ for i in "$@"; do
             EMAIL="${i#*=}"
             shift # past argument=value
             ;;
+        -c=*|--runcfd=*)
+            RUNCFD="${i#*=}"
+            shift # past argument=value
+            ;;
+        -p=*|--runprescursor=*)
+            RUNPRECURSOR="${i#*=}"
+            shift # past argument=value
+            ;;
         --)
             shift
             break
@@ -57,7 +65,7 @@ aprepro -qW --include ${aprepro_include} OPENFAST_DT=\"$openfast_dt\" IEA-15-240
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt ONE_REV=$one_rev HUN_REV=\"$hun_rev\" inp.yaml inp.yaml
 
 # submit script replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL ../run_case.sh.i run_case.sh
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL RUN_PRE=$RUNPRECURSOR RUN_CFD=$RUNCFD ../run_case.sh.i run_case.sh
 
 # submit case if submit flag given
 if [ -n "${SUBMIT}" ]; then
