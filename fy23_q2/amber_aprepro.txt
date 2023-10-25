@@ -1,0 +1,16 @@
+{SLURM_ARGS = '
+#SBATCH -A FY190020
+#SBATCH -t 96:00:00
+#SBATCH --qos=long
+#SBATCH -N 30'}
+
+{MACHINE_NAME="attaway"}
+{NALU_RANK_PERCENTAGE=25}
+{MESH="/projects/wind/meshes/split/iea15mw/iea15mw_3blade_volume_v0.2.exo"}
+{DLL="/projects/wind/spack-manager/environments/hfm-fsi-amber/opt/linux-rhel8-icelake/intel-2021.3.0/rosco-2.7.0-62jdktikuxoy4vvcmk5h6rymwjtgx2fe/lib/libdiscon.so"}
+
+{CLEANUP_ARGS = '
+chown $USER:wg-sierra-users .
+chmod g+s .
+'}
+{_FORMAT="%.18g"}
