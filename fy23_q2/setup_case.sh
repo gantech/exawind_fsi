@@ -17,6 +17,22 @@ for i in "$@"; do
             EMAIL="${i#*=}"
             shift # past argument=value
             ;;
+        -c=*|--runcfd=*)
+            RUNCFD="${i#*=}"
+            shift # past argument=value
+            ;;
+        -p=*|--runprescursor=*)
+            RUNPRECURSOR="${i#*=}"
+            shift # past argument=value
+            ;;
+        -n=*|--numnodes=*)
+            NUMNODES="${i#*=}"
+            shift # past argument=value
+            ;;
+        -l=*|--precursorlength=*)
+            PRECURSORLENGTH="${i#*=}"
+            shift # past argument=value
+            ;;
         --)
             shift
             break
@@ -26,26 +42,40 @@ done
 
 # must load things so that aprepro is active in the shell
 # machine specific params i.e. mesh/restart/etc
+scriptdir=$(pwd)
 aprepro_include=$(pwd)/${MACHINE}_aprepro.txt
 source $(pwd)/${MACHINE}_setup_env.sh
 
 # define rpm and pitch inputs for this wind speed
-rpm_pitch_time=$(./process_turbine_params.py ${WIND_SPEED})
+rpm_pitch_time=$(./process_turbine_params.py ${WIND_SPEED} ${PRECURSORLENGTH})
 rpm=$(echo "$rpm_pitch_time" | awk '{print $1}')
 pitch=$(echo "$rpm_pitch_time" | awk '{print $2}')
 cfd_dt=$(echo "$rpm_pitch_time" | awk '{print $3}')
 openfast_dt=$(echo "$rpm_pitch_time" | awk '{print $4}')
-chkp_num=$(echo "$rpm_pitch_time" | awk '{print $5}')
+azblend=$(echo "$rpm_pitch_time" | awk '{print $5}')
+preclen=$(echo "$rpm_pitch_time" | awk '{print $6}')
+dtratio=$(echo "$rpm_pitch_time" | awk '{print $7}')
+chkpnum=$(echo "$rpm_pitch_time" | awk '{print $8}')
 
-target_dir=wind_speed_$WIND_SPEED
+parent_dir=/pscratch/ndeveld/hfm-2023-q4/hfm_fy23_q1_final/precursors_iea15mw
+target_dir=$parent_dir/wind_speed_$WIND_SPEED
 mkdir -p $target_dir
 cp -R openfast_run/* $target_dir
 cp -R fsi_run/* $target_dir
+cp -R IEA-15-240-RWT $parent_dir/.
 cd $target_dir
+
+# If just a precursor run, use only single node per job
+if [ "$RUNCFD" -eq 1 ] ; then
+    echo "Not changing NUMNODES"
+else 
+    echo "Running on single nodes, precursor only"
+    NUMNODES=1
+fi
 
 # text replace the wind speed and mesh location in these files
 # cfd input file replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=$openfast_dt CHKP_NUM=$chkp_num iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=$openfast_dt CHKP_NUM=$chkpnum iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=\"$cfd_dt\" iea15mw-amr-01.inp iea15mw-amr-01.inp 
 
 # openfast model replacements
@@ -54,15 +84,16 @@ aprepro -qW --include ${aprepro_include} RPM=$rpm PITCH=$pitch  IEA-15-240-RWT-M
 aprepro -qW --include ${aprepro_include} OPENFAST_DT=\"$openfast_dt\" IEA-15-240-RWT-Monopile.fst IEA-15-240-RWT-Monopile.fst
 
 # openfastcpp input replacements 
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt ONE_REV=$one_rev HUN_REV=\"$hun_rev\" inp.yaml inp.yaml
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt PREC_LEN=$preclen AZB=\"$azblend\" inp.yaml inp.yaml
 
 # submit script replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL ../run_case.sh.i run_case.sh
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL RUN_PRE=$RUNPRECURSOR RUN_CFD=$RUNCFD NNODES=$NUMNODES SCRIPT_DIR=$scriptdir $scriptdir/run_case.sh.i run_case.sh
 
 # submit case if submit flag given
 if [ -n "${SUBMIT}" ]; then
   if [ "${MACHINE}"=="snl-hpc" ]; then
-    sbatch -M attaway,chama,skybridge run_case.sh
+    #sbatch -M chama,skybridge run_case.sh
+    sbatch run_case.sh
   else
     sbatch run_case.sh
   fi

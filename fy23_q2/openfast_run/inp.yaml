@@ -5,8 +5,8 @@ sim_start: init
 coupling_mode: strong
 n_iter: 1
 t_start:  0.0
-t_end:    {CFD_DT * ( 1440 + 10 )} # do 10 extra steps to make sure we get chkp file
-t_max:    {CFD_DT*14400}
+t_end:    {PREC_LEN + (10*CFD_DT)} # do 10 extra steps to make sure we get chkp file
+t_max:    {PREC_LEN*100}
 dt_driver: {CFD_DT}
 restart_freq: 1440
 output_freq: 1
@@ -29,7 +29,7 @@ Turbine0:
   - 0.0
   num_force_pts_blade: 50
   num_force_pts_tower: 12
-  az_blend_mean: 18.84955592153876
+  az_blend_mean: {AZB}
   az_blend_delta: 1.5707963267948966
   vel_mean: {WIND_SPEED}
   wind_dir: 270.0
