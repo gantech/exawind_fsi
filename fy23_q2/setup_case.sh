@@ -42,6 +42,7 @@ done
 
 # must load things so that aprepro is active in the shell
 # machine specific params i.e. mesh/restart/etc
+scriptdir=$(pwd)
 aprepro_include=$(pwd)/${MACHINE}_aprepro.txt
 source $(pwd)/${MACHINE}_setup_env.sh
 
@@ -56,10 +57,12 @@ preclen=$(echo "$rpm_pitch_time" | awk '{print $6}')
 dtratio=$(echo "$rpm_pitch_time" | awk '{print $7}')
 chkpnum=$(echo "$rpm_pitch_time" | awk '{print $8}')
 
-target_dir=wind_speed_$WIND_SPEED
+parent_dir=/pscratch/ndeveld/hfm-2023-q4/hfm_fy23_q1_final/precursors_iea15mw
+target_dir=$parent_dir/wind_speed_$WIND_SPEED
 mkdir -p $target_dir
 cp -R openfast_run/* $target_dir
 cp -R fsi_run/* $target_dir
+cp -R IEA-15-240-RWT $parent_dir/.
 cd $target_dir
 
 # If just a precursor run, use only single node per job
@@ -84,12 +87,13 @@ aprepro -qW --include ${aprepro_include} OPENFAST_DT=\"$openfast_dt\" IEA-15-240
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt PREC_LEN=$preclen AZB=\"$azblend\" inp.yaml inp.yaml
 
 # submit script replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL RUN_PRE=$RUNPRECURSOR RUN_CFD=$RUNCFD NNODES=$NUMNODES ../run_case.sh.i run_case.sh
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED EMAIL=$EMAIL RUN_PRE=$RUNPRECURSOR RUN_CFD=$RUNCFD NNODES=$NUMNODES SCRIPT_DIR=$scriptdir $scriptdir/run_case.sh.i run_case.sh
 
 # submit case if submit flag given
 if [ -n "${SUBMIT}" ]; then
   if [ "${MACHINE}"=="snl-hpc" ]; then
-    sbatch -M attaway,chama,skybridge run_case.sh
+    #sbatch -M chama,skybridge run_case.sh
+    sbatch run_case.sh
   else
     sbatch run_case.sh
   fi

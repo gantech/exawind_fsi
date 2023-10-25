@@ -10,7 +10,7 @@
 
 # load the modules with exawind executable/setup the run env
 # MACHINE_NAME will get populated via aprepro
-source ../{MACHINE_NAME}_setup_env.sh
+source {SCRIPT_DIR}/{MACHINE_NAME}_setup_env.sh
 
 nodes=$SLURM_JOB_NUM_NODES
 rpn=$(ranks_per_node)
