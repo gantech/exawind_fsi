@@ -61,8 +61,12 @@ preclen=$(echo "$rpm_pitch_time" | awk '{print $6}')
 dtratio=$(echo "$rpm_pitch_time" | awk '{print $7}')
 chkpnum=$(echo "$rpm_pitch_time" | awk '{print $8}')
 
+if [ -z "$PRECURSORLENGTH" ]; then
+  PRECURSORLENGTH=80.0
+fi
+
 if [ -z "$RUNDIRECTORY" ]; then
-    RUNDIRECTORY=${scriptdir}
+  RUNDIRECTORY=${scriptdir}
 fi
 
 target_dir=${RUNDIRECTORY}/wind_speed_$WIND_SPEED
