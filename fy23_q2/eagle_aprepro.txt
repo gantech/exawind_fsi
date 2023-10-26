@@ -11,4 +11,4 @@
 {RUN_PRE_COMMAND="srun -N 1 -n 1 openfastcpp inp.yaml"}
 
 {CLEANUP_ARGS = ''}
-{_FORMAT="%.18g"}
+{_FORMAT="%.15g"}
