@@ -180,8 +180,8 @@ realms:
     dry_run:  False
     debug:    False
     sim_start: trueRestart  #/trueRestart/restartDriverInitFAST
-    t_start: { 1440 * CFD_DT } # one rev
-    t_max: { 14400 * CFD_DT } # 100 rev
+    t_start: {PREC_LEN} # one rev
+    t_max: { 100 * PREC_LEN } # 100 rev
     n_checkpoint: 1440
     dt_FAST: {OPENFAST_DT}
     Turbine0:
@@ -198,8 +198,8 @@ realms:
         - ["blade1"]
         - ["blade2"]
         - ["blade3"]
-      az_blend_mean: 18.84955592153876
-      az_blend_delta: 1.5707963267948966
+      az_blend_mean: {AZB}
+      az_blend_delta: 3.1415926535897
       vel_mean: {WIND_SPEED}
       wind_dir: 270.0
       z_ref: 150.0
