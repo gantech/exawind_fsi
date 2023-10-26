@@ -1,4 +1,4 @@
-
+PRECURSORLENGTH=80.0
 for i in "$@"; do
     case "$1" in
         -m=*|--machine=*)
@@ -61,10 +61,6 @@ preclen=$(echo "$rpm_pitch_time" | awk '{print $6}')
 dtratio=$(echo "$rpm_pitch_time" | awk '{print $7}')
 chkpnum=$(echo "$rpm_pitch_time" | awk '{print $8}')
 
-if [ -z "$PRECURSORLENGTH" ]; then
-  PRECURSORLENGTH=80.0
-fi
-
 if [ -z "$RUNDIRECTORY" ]; then
   RUNDIRECTORY=${scriptdir}
 fi
@@ -93,7 +89,7 @@ echo "$w: dt ratio: $dtratio"
 
 # text replace the wind speed and mesh location in these files
 # cfd input file replacements
-aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=\"$openfast_dt\" PREC_LEN=$preclen CHKP_NUM=$chkpnum AZB=$azblend iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
+aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt OPENFAST_DT=$openfast_dt PREC_LEN=$preclen CHKP_NUM=$chkpnum AZB=$azblend iea15mw-nalu-01.yaml iea15mw-nalu-01.yaml 
 aprepro -qW --include ${aprepro_include} WIND_SPEED=$WIND_SPEED CFD_DT=$cfd_dt iea15mw-amr-01.inp iea15mw-amr-01.inp 
 
 # openfast model replacements
