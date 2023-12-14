@@ -5,6 +5,6 @@ wind_speeds=(5.0)
 #wind_speeds=(10.59 14.0)
 for w in "${wind_speeds[@]}"; do
   echo "Setting up directory for wind speed $w"
-  ./setup_case.sh -m=snl-hpc -e="${USER}@sandia.gov" -w="$w" -s=0 -p=1 -c=1 -n=90 -l=80.0 -d=/scratch/kmoore
+  ./setup_case.sh -m=eagle -e="${USER}@sandia.gov" -w="$w" -s=0 -p=1 -c=1 -n=90 -l=80.0 -d=/scratch/kmoore
 done
   
