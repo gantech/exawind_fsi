@@ -4,6 +4,8 @@ export SPACK_MANAGER=/projects/hfm/kmoore/spack-manager
 source $SPACK_MANAGER/start.sh
 spack-start
 spack env activate /projects/hfm/kmoore/spack-manager/environments/exawind
+spack load exawind
+spack load rosco
 spack load nalu-wind
 spack load amr-wind
 spack load openfast
