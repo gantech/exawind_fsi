@@ -1,5 +1,5 @@
 module load gcc/9.3.0
-modul load mpt/2.22
+module load mpt/2.22
 export SPACK_MANAGER=/projects/hfm/kmoore/spack-manager
 source $SPACK_MANAGER/start.sh
 spack-start
