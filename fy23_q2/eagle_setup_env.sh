@@ -3,7 +3,7 @@ module load mpt/2.22
 export SPACK_MANAGER=/projects/hfm/kmoore/spack-manager
 source $SPACK_MANAGER/start.sh
 spack-start
-spack env activate /projects/hfm/kmoore/spack-manager/environments/exawind
+spack env activate /projects/hfm/kmoore/spack-manager/environments/exawindDev4
 spack load exawind
 spack load rosco
 spack load nalu-wind
