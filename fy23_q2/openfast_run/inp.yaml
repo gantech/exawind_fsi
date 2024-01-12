@@ -30,7 +30,7 @@ Turbine0:
   num_force_pts_blade: 50
   num_force_pts_tower: 12
   az_blend_mean: {AZB}
-  az_blend_delta: 1.5707963267948966
+  az_blend_delta: {PI}
   vel_mean: {WIND_SPEED}
   wind_dir: 270.0
   z_ref: 150.0
