@@ -199,7 +199,7 @@ realms:
         - ["blade2"]
         - ["blade3"]
       az_blend_mean: {AZB}
-      az_blend_delta: 3.1415926535897
+      az_blend_delta: {PI}
       vel_mean: {WIND_SPEED}
       wind_dir: 270.0
       z_ref: 150.0
