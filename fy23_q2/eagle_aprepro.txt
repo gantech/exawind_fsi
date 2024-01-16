@@ -1,6 +1,6 @@
 {SLURM_ARGS = '
 #SBATCH -A hfm
-#SBATCH -t 4:00:0'}
+#SBATCH -t 2:00:0'}
 
 {MACHINE_NAME="eagle"}
 {NALU_RANK_PERCENTAGE=75}
