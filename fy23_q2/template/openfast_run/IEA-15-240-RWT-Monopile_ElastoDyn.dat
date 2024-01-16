@@ -25,12 +25,12 @@ False         PtfmYDOF    - Platform yaw rotation DOF (flag)
 ---------------------- INITIAL CONDITIONS --------------------------------------
 0.0                    OoPDefl     - Initial out-of-plane blade-tip displacement (meters)
 0.0                    IPDefl      - Initial in-plane blade-tip deflection (meters)
-{PITCH}                    BlPitch(1)  - Blade 1 initial pitch (degrees)
-{PITCH}                    BlPitch(2)  - Blade 2 initial pitch (degrees)
-{PITCH}                    BlPitch(3)  - Blade 3 initial pitch (degrees) [unused for 2 blades]
+PITCH                  BlPitch(1)  - Blade 1 initial pitch (degrees)
+PITCH                  BlPitch(2)  - Blade 2 initial pitch (degrees)
+PITCH                  BlPitch(3)  - Blade 3 initial pitch (degrees) [unused for 2 blades]
 0.0                    TeetDefl    - Initial or fixed teeter angle (degrees) [unused for 3 blades]
 0.0                    Azimuth     - Initial azimuth angle for blade 1 (degrees)
-{RPM}                   RotSpeed    - Initial or fixed rotor speed (rpm)
+ROTOR_SPEED            RotSpeed    - Initial or fixed rotor speed (rpm)
 0.0                    NacYaw      - Initial or fixed nacelle-yaw angle (degrees)
 0.0                    TTDspFA     - Initial fore-aft tower-top displacement (meters)
 0.0                    TTDspSS     - Initial side-to-side tower-top displacement (meters)
@@ -83,9 +83,9 @@ False         PtfmYDOF    - Platform yaw rotation DOF (flag)
 100000000.0            PtfmYIner   - Platform inertia for yaw rotation about the platform CM (kg m^2)
 ---------------------- BLADE ---------------------------------------------------
 50                     BldNodes    - Number of blade nodes (per blade) used for analysis (-)
-"../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile1    - Name of file containing properties for blade 1 (quoted string)
-"../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile2    - Name of file containing properties for blade 2 (quoted string)
-"../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile3    - Name of file containing properties for blade 3 (quoted string) [unused for 2 blades]
+"../../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile1    - Name of file containing properties for blade 1 (quoted string)
+"../../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile2    - Name of file containing properties for blade 2 (quoted string)
+"../../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile3    - Name of file containing properties for blade 3 (quoted string) [unused for 2 blades]
 ---------------------- ROTOR-TEETER --------------------------------------------
 0                      TeetMod     - Rotor-teeter spring/damper model (0: none, 1: standard, 2: user-defined from routine UserTeet) (switch) [unused for 3 blades]
 0.0                    TeetDmpP    - Rotor-teeter damper position (degrees) [used only for 2 blades and when TeetMod=1]
