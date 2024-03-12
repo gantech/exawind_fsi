@@ -1,0 +1,188 @@
+! ------------ AirfoilInfo v1.01.x Input File ----------------------------------
+! 
+! Made by Jason Jonkman
+! note that this file uses Marshall Buhl's new input file processing; start all comment lines with !
+! ------------------------------------------------------------------------------
+"DEFAULT"     InterpOrd     - ! Interpolation order to use for quasi-steady table lookup {1=linear; 3=cubic spline; "default"} [default=1]
+1             NonDimArea    - ! The non-dimensional area of the airfoil (area/chord^2) (set to 1.0 if unsure or unneeded)
+@"Cylinder1_coords.txt" NumCoords     - ! The number of coordinates in the airfoil shape file. Set to zero if coordinates not included.
+"unused"      BL_file       - ! The file name including the boundary layer characteristics of the profile. Ignored if the aeroacoustic module is not called.
+1             NumTabs       - ! Number of airfoil tables in this file.
+! ------------------------------------------------------------------------------
+! data for table 1
+! ------------------------------------------------------------------------------
+1.0           re            - ! Reynolds number in millions
+0             UserProp      - ! User property (control) setting
+True          InclUAdata    - ! Is unsteady aerodynamics data included in this table? If TRUE, then include 30 UA coefficients below this line
+!........................................
+-4.0649       alpha0        - ! 0-lift angle of attack, depends on airfoil.
+11.8184       alpha1        - ! Angle of attack at f=0.7, (approximately the stall angle) for AOA>alpha0. (deg)
+-11.5445      alpha2        - ! Angle of attack at f=0.7, (approximately the stall angle) for AOA<alpha0. (deg)
+0             eta_e         - ! Recovery factor in the range [0.85 - 0.95] used only for UAMOD=1, it is set to 1 in the code when flookup=True. (-)
+6.9225        C_nalpha      - ! Slope of the 2D normal force coefficient curve. (1/rad)
+3             T_f0          - ! Initial value of the time constant associated with Df in the expression of Df and f''. [default = 3]
+6             T_V0          - ! Initial value of the time constant associated with the vortex lift decay process; it is used in the expression of Cvn. It depends on Re,M, and airfoil class. [default = 6]
+1.7           T_p           - ! Boundary-layer,leading edge pressure gradient time constant in the expression of Dp. It should be tuned based on airfoil experimental data. [default = 1.7]
+11            T_VL          - ! Initial value of the time constant associated with the vortex advection process; it represents the non-dimensional time in semi-chords, needed for a vortex to travel from LE to trailing edge (TE); it is used in the expression of Cvn. It depends on Re, M (weakly), and airfoil. [valid range = 6 - 13, default = 11]
+0.14          b1            - ! Constant in the expression of phi_alpha^c and phi_q^c. This value is relatively insensitive for thin airfoils, but may be different for turbine airfoils. [from experimental results, defaults to 0.14]
+0.53          b2            - ! Constant in the expression of phi_alpha^c and phi_q^c. This value is relatively insensitive for thin airfoils, but may be different for turbine airfoils. [from experimental results, defaults to 0.53]
+5             b5            - ! Constant in the expression of K'''_q,Cm_q^nc, and k_m,q. [from experimental results, defaults to 5]
+0.3           A1            - ! Constant in the expression of phi_alpha^c and phi_q^c. This value is relatively insensitive for thin airfoils, but may be different for turbine airfoils. [from experimental results, defaults to 0.3]
+0.7           A2            - ! Constant in the expression of phi_alpha^c and phi_q^c. This value is relatively insensitive for thin airfoils, but may be different for turbine airfoils. [from experimental results, defaults to 0.7]
+1             A5            - ! Constant in the expression of K'''_q,Cm_q^nc, and k_m,q. [from experimental results, defaults to 1]
+0             S1            - ! Constant in the f curve best-fit for alpha0<=AOA<=alpha1; by definition it depends on the airfoil. [ignored if UAMod<>1]
+0             S2            - ! Constant in the f curve best-fit for AOA> alpha1; by definition it depends on the airfoil. [ignored if UAMod<>1]
+0             S3            - ! Constant in the f curve best-fit for alpha2<=AOA< alpha0; by definition it depends on the airfoil. [ignored if UAMod<>1]
+0             S4            - ! Constant in the f curve best-fit for AOA< alpha2; by definition it depends on the airfoil. [ignored if UAMod<>1]
+1.6208        Cn1           - ! Critical value of C0n at leading edge separation. It should be extracted from airfoil data at a given Mach and Reynolds number. It can be calculated from the static value of Cn at either the break in the pitching moment or the loss of chord force at the onset of stall. It is close to the condition of maximum lift of the airfoil at low Mach numbers.
+-0.922        Cn2           - ! As Cn1 for negative AOAs.
+0.19          St_sh         - ! Strouhal's shedding frequency constant. [default = 0.19]
+0.006         Cd0           - ! 2D drag coefficient value at 0-lift.
+0.1155        Cm0           - ! 2D pitching moment coefficient about 1/4-chord location, at 0-lift, positive if nose up. [If the aerodynamics coefficients table does not include a column for Cm, this needs to be set to 0.0]
+0             k0            - ! Constant in the \hat(x)_cp curve best-fit; = (\hat(x)_AC-0.25). [ignored if UAMod<>1]
+0             k1            - ! Constant in the \hat(x)_cp curve best-fit. [ignored if UAMod<>1]
+0             k2            - ! Constant in the \hat(x)_cp curve best-fit. [ignored if UAMod<>1]
+0             k3            - ! Constant in the \hat(x)_cp curve best-fit. [ignored if UAMod<>1]
+0             k1_hat        - ! Constant in the expression of Cc due to leading edge vortex effects. [ignored if UAMod<>1]
+0.2           x_cp_bar      - ! Constant in the expression of \hat(x)_cp^v. [ignored if UAMod<>1, default = 0.2]
+"DEFAULT"     UACutout      - ! Angle of attack above which unsteady aerodynamics are disabled (deg). [Specifying the string "Default" sets UACutout to 45 degrees]
+"DEFAULT"     filtCutOff    - ! Reduced frequency cut-off for low-pass filtering the AoA input to UA, as well as the 1st and 2nd derivatives (-) [default = 0.5]
+!........................................
+! Table of aerodynamics coefficients
+133           NumAlf        - ! Number of data lines in the following table
+! Alpha           Cl              Cd              Cm             
+! (deg)           (-)             (-)             (-)            
+-1.80000000e+02	 0.00000000e+00	 9.38900000e-02	 0.00000000e+00
+-1.78214290e+02	 6.23900000e-02	 9.50600000e-02	 7.14300000e-02
+-1.76428570e+02	 1.24780000e-01	 9.85600000e-02	 1.42860000e-01
+-1.74642860e+02	 1.87170000e-01	 1.04380000e-01	 2.14290000e-01
+-1.72857140e+02	 2.49570000e-01	 1.12490000e-01	 2.85710000e-01
+-1.71071430e+02	 3.11960000e-01	 1.22860000e-01	 3.57140000e-01
+-1.69285710e+02	 3.74350000e-01	 1.35460000e-01	 3.96450000e-01
+-1.67500000e+02	 4.36740000e-01	 1.50220000e-01	 3.87590000e-01
+-1.65714290e+02	 4.99130000e-01	 1.67100000e-01	 3.78720000e-01
+-1.63928570e+02	 5.61520000e-01	 1.86020000e-01	 3.69850000e-01
+-1.62142860e+02	 6.23910000e-01	 2.06910000e-01	 3.60980000e-01
+-1.60357140e+02	 6.86310000e-01	 2.29680000e-01	 3.52120000e-01
+-1.58571430e+02	 7.48700000e-01	 2.54240000e-01	 3.45890000e-01
+-1.56785710e+02	 8.11090000e-01	 2.80500000e-01	 3.40320000e-01
+-1.55000000e+02	 8.73480000e-01	 3.08350000e-01	 3.34750000e-01
+-1.50357140e+02	 7.99160000e-01	 3.87380000e-01	 3.20270000e-01
+-1.45714290e+02	 7.42920000e-01	 4.74240000e-01	 2.93610000e-01
+-1.41071430e+02	 6.94480000e-01	 5.66570000e-01	 2.65940000e-01
+-1.36428570e+02	 6.47900000e-01	 6.61870000e-01	 2.54020000e-01
+-1.31785710e+02	 5.99690000e-01	 7.57540000e-01	 2.46820000e-01
+-1.27142860e+02	 5.47830000e-01	 8.50970000e-01	 2.43310000e-01
+-1.22500000e+02	 4.91320000e-01	 9.39580000e-01	 2.42110000e-01
+-1.17857140e+02	 4.29880000e-01	 1.02095000e+00	 2.40600000e-01
+-1.13214290e+02	 3.63800000e-01	 1.09280000e+00	 2.38710000e-01
+-1.08571430e+02	 2.93800000e-01	 1.15311000e+00	 2.35480000e-01
+-1.03928570e+02	 2.20970000e-01	 1.20017000e+00	 2.29210000e-01
+-9.92857100e+01	 1.46650000e-01	 1.23260000e+00	 2.21980000e-01
+-9.46428600e+01	 7.24100000e-02	 1.24941000e+00	 2.09470000e-01
+-9.00000000e+01	 0.00000000e+00	 1.25000000e+00	 1.96970000e-01
+-8.53571400e+01	-7.24100000e-02	 1.24941000e+00	 1.81310000e-01
+-8.07142900e+01	-1.46650000e-01	 1.23260000e+00	 1.65650000e-01
+-7.60714300e+01	-2.20970000e-01	 1.20017000e+00	 1.45670000e-01
+-7.14285700e+01	-2.93800000e-01	 1.15311000e+00	 1.24910000e-01
+-6.67857100e+01	-3.63800000e-01	 1.09280000e+00	 1.02230000e-01
+-6.21428600e+01	-4.29880000e-01	 1.02095000e+00	 7.87100000e-02
+-5.75000000e+01	-4.91320000e-01	 9.39580000e-01	 5.46700000e-02
+-5.28571400e+01	-5.47830000e-01	 8.50970000e-01	 3.02000000e-02
+-4.82142900e+01	-5.99690000e-01	 7.57540000e-01	 5.36000000e-03
+-4.35714300e+01	-6.47900000e-01	 6.61870000e-01	-2.00400000e-02
+-3.89285700e+01	-6.94480000e-01	 5.66570000e-01	-4.68500000e-02
+-3.42857100e+01	-7.42920000e-01	 4.74240000e-01	-7.84100000e-02
+-2.96428600e+01	-7.99160000e-01	 3.87380000e-01	-1.11860000e-01
+-2.50000000e+01	-8.73480000e-01	 3.08350000e-01	-1.68150000e-01
+-2.39285700e+01	-8.65130000e-01	 2.87530000e-01	-1.81140000e-01
+-2.28571400e+01	-8.56780000e-01	 2.66700000e-01	-1.94130000e-01
+-2.17857100e+01	-8.48430000e-01	 2.45880000e-01	-2.07120000e-01
+-2.07142900e+01	-8.40080000e-01	 2.25060000e-01	-2.20110000e-01
+-1.96428600e+01	-8.31730000e-01	 2.04230000e-01	-2.20600000e-01
+-1.85714300e+01	-8.23380000e-01	 1.83410000e-01	-1.96090000e-01
+-1.75000000e+01	-8.15030000e-01	 1.62590000e-01	-1.71580000e-01
+-1.64285700e+01	-8.06680000e-01	 1.41760000e-01	-1.47070000e-01
+-1.53571400e+01	-7.98330000e-01	 1.20940000e-01	-1.22560000e-01
+-1.42857100e+01	-7.89980000e-01	 1.00110000e-01	-9.80500000e-02
+-1.32142900e+01	-7.81630000e-01	 7.92900000e-02	-7.35300000e-02
+-1.21428600e+01	-7.73280000e-01	 5.84700000e-02	-4.90200000e-02
+-1.00000000e+01	-7.56580000e-01	 1.68200000e-02	 6.26200000e-02
+-9.00000000e+00	-6.42460000e-01	 1.12700000e-02	 8.14600000e-02
+-8.00000000e+00	-5.02580000e-01	 8.57000000e-03	 9.53300000e-02
+-7.00000000e+00	-3.70260000e-01	 7.33000000e-03	 1.03030000e-01
+-6.00000000e+00	-2.42500000e-01	 6.68000000e-03	 1.08140000e-01
+-5.00000000e+00	-1.16670000e-01	 6.28000000e-03	 1.12220000e-01
+-4.00000000e+00	 8.10000000e-03	 6.03000000e-03	 1.15760000e-01
+-3.00000000e+00	 1.32070000e-01	 5.90000000e-03	 1.18960000e-01
+-2.00000000e+00	 2.55260000e-01	 5.85000000e-03	 1.21890000e-01
+-1.00000000e+00	 3.77660000e-01	 5.88000000e-03	 1.24590000e-01
+ 0.00000000e+00	 4.99050000e-01	 5.98000000e-03	 1.27050000e-01
+ 1.00000000e+00	 6.19350000e-01	 6.15000000e-03	 1.29270000e-01
+ 2.00000000e+00	 7.38220000e-01	 6.39000000e-03	 1.31210000e-01
+ 3.00000000e+00	 8.55230000e-01	 6.71000000e-03	 1.32800000e-01
+ 4.00000000e+00	 9.69770000e-01	 7.12000000e-03	 1.33950000e-01
+ 5.00000000e+00	 1.08075000e+00	 7.64000000e-03	 1.34460000e-01
+ 6.00000000e+00	 1.18807000e+00	 8.28000000e-03	 1.34390000e-01
+ 7.00000000e+00	 1.29212000e+00	 9.08000000e-03	 1.33930000e-01
+ 8.00000000e+00	 1.39174000e+00	 1.01200000e-02	 1.33010000e-01
+ 9.00000000e+00	 1.48462000e+00	 1.15300000e-02	 1.31490000e-01
+ 1.00000000e+01	 1.56742000e+00	 1.36000000e-02	 1.29310000e-01
+ 1.10000000e+01	 1.63219000e+00	 1.68800000e-02	 1.26040000e-01
+ 1.20000000e+01	 1.65202000e+00	 2.34000000e-02	 1.20440000e-01
+ 1.30000000e+01	 1.50636000e+00	 4.26900000e-02	 1.08220000e-01
+ 1.40000000e+01	 1.39635000e+00	 6.10700000e-02	 1.01540000e-01
+ 1.50000000e+01	 1.35543000e+00	 7.48600000e-02	 9.89000000e-02
+ 1.60000000e+01	 1.33552000e+00	 8.75200000e-02	 9.78300000e-02
+ 1.70000000e+01	 1.33231000e+00	 1.00300000e-01	 9.94600000e-02
+ 1.80000000e+01	 1.34788000e+00	 1.13190000e-01	 9.86900000e-02
+ 1.90000000e+01	 1.32315000e+00	 1.20950000e-01	 9.69400000e-02
+ 2.00000000e+01	 1.43079000e+00	 1.75070000e-01	 1.40450000e-01
+ 2.10000000e+01	 1.27985000e+00	 1.46460000e-01	 9.62000000e-02
+ 2.20000000e+01	 1.42086000e+00	 2.27000000e-01	 1.63200000e-01
+ 2.30000000e+01	 1.37015000e+00	 2.43420000e-01	 1.55470000e-01
+ 2.40000000e+01	 1.19064000e+00	 2.19920000e-01	 1.18000000e-01
+ 2.50000000e+01	 1.24783000e+00	 3.08350000e-01	 1.76500000e-01
+ 2.96428600e+01	 1.14165000e+00	 3.87380000e-01	 1.09980000e-01
+ 3.42857100e+01	 1.06132000e+00	 4.74240000e-01	 6.87800000e-02
+ 3.89285700e+01	 9.92110000e-01	 5.66570000e-01	 2.96900000e-02
+ 4.35714300e+01	 9.25570000e-01	 6.61870000e-01	 2.80000000e-04
+ 4.82142900e+01	 8.56700000e-01	 7.57540000e-01	-2.62200000e-02
+ 5.28571400e+01	 7.82610000e-01	 8.50970000e-01	-5.01600000e-02
+ 5.75000000e+01	 7.01890000e-01	 9.39580000e-01	-7.24900000e-02
+ 6.21428600e+01	 6.14120000e-01	 1.02095000e+00	-9.37700000e-02
+ 6.67857100e+01	 5.19720000e-01	 1.09280000e+00	-1.13840000e-01
+ 7.14285700e+01	 4.19720000e-01	 1.15311000e+00	-1.33190000e-01
+ 7.60714300e+01	 3.15660000e-01	 1.20017000e+00	-1.50900000e-01
+ 8.07142900e+01	 2.09490000e-01	 1.23260000e+00	-1.68110000e-01
+ 8.53571400e+01	 1.03450000e-01	 1.24941000e+00	-1.82540000e-01
+ 9.00000000e+01	 0.00000000e+00	 1.25000000e+00	-1.96970000e-01
+ 9.46428600e+01	-7.24100000e-02	 1.24941000e+00	-2.09470000e-01
+ 9.92857100e+01	-1.46650000e-01	 1.23260000e+00	-2.21980000e-01
+ 1.03928570e+02	-2.20970000e-01	 1.20017000e+00	-2.29210000e-01
+ 1.08571430e+02	-2.93800000e-01	 1.15311000e+00	-2.35480000e-01
+ 1.13214290e+02	-3.63800000e-01	 1.09280000e+00	-2.38710000e-01
+ 1.17857140e+02	-4.29880000e-01	 1.02095000e+00	-2.40600000e-01
+ 1.22500000e+02	-4.91320000e-01	 9.39580000e-01	-2.42110000e-01
+ 1.27142860e+02	-5.47830000e-01	 8.50970000e-01	-2.43310000e-01
+ 1.31785710e+02	-5.99690000e-01	 7.57540000e-01	-2.46820000e-01
+ 1.36428570e+02	-6.47900000e-01	 6.61870000e-01	-2.54020000e-01
+ 1.41071430e+02	-6.94480000e-01	 5.66570000e-01	-2.65940000e-01
+ 1.45714290e+02	-7.42920000e-01	 4.74240000e-01	-2.93610000e-01
+ 1.50357140e+02	-7.99160000e-01	 3.87380000e-01	-3.20270000e-01
+ 1.55000000e+02	-8.73480000e-01	 3.08350000e-01	-3.34750000e-01
+ 1.56785710e+02	-8.11090000e-01	 2.80500000e-01	-3.40320000e-01
+ 1.58571430e+02	-7.48700000e-01	 2.54240000e-01	-3.45890000e-01
+ 1.60357140e+02	-6.86310000e-01	 2.29680000e-01	-3.55690000e-01
+ 1.62142860e+02	-6.23910000e-01	 2.06910000e-01	-3.82410000e-01
+ 1.63928570e+02	-5.61520000e-01	 1.86020000e-01	-4.09140000e-01
+ 1.65714290e+02	-4.99130000e-01	 1.67100000e-01	-4.35860000e-01
+ 1.67500000e+02	-4.36740000e-01	 1.50220000e-01	-4.62590000e-01
+ 1.69285710e+02	-3.74350000e-01	 1.35460000e-01	-4.89310000e-01
+ 1.71071430e+02	-3.11960000e-01	 1.22860000e-01	-4.46430000e-01
+ 1.72857140e+02	-2.49570000e-01	 1.12490000e-01	-3.57140000e-01
+ 1.74642860e+02	-1.87170000e-01	 1.04380000e-01	-2.67860000e-01
+ 1.76428570e+02	-1.24780000e-01	 9.85600000e-02	-1.78570000e-01
+ 1.78214290e+02	-6.23900000e-02	 9.50600000e-02	-8.92900000e-02
+ 1.80000000e+02	 0.00000000e+00	 9.38900000e-02	 0.00000000e+00
+! ------------------------------------------------------------------------------
