@@ -6,11 +6,16 @@
 #SBATCH --array=1-12
 #SBATCH --job-name=iea15mw_powercurve
 #SBATCH --output=out.%x_%j
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=ganesh.vijayakumar@nrel.gov
 
-export SPACK_MANAGER=/home/gvijayak/exawind/source/spack-manager
-source /home/gvijayak/exawind/source/spack-manager/start.sh
+
+module load cray-python
+module swap PrgEnv-cray PrgEnv-intel
+export EXAWIND_MANAGER=/home/gvijayak/exawind-manager
+source /home/gvijayak/exawind-manager/start.sh
 spack-start
-quick-activate /home/gvijayak/exawind/source/spack-manager/environments/fsi-merge-release
+quick-activate /home/gvijayak/exawind-manager/environments/fsi
 spack load exawind
 
 cd $(sed -n "${SLURM_ARRAY_TASK_ID}p" case_list)/fsi_run

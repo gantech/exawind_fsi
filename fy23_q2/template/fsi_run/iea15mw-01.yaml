@@ -4,7 +4,7 @@ exawind:
   nalu_wind_inp:
     - iea15mw-nalu-01.yaml
   amr_wind_inp: iea15mw-amr-01.inp
-  num_timesteps: 43200
+  num_timesteps: 36000
   #num_timesteps: 72
   nonlinear_iterations: 1
 
@@ -20,4 +20,3 @@ exawind:
     - sdr
   amr_node_vars:
     - p
-    

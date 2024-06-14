@@ -55,24 +55,24 @@ def gen_case(template_dir, case_data, case_dir=None):
     Path(case_dir+'/fsi_run').mkdir(parents=True, exist_ok=True)
     Path(case_dir+'/openfast_run').mkdir(parents=True, exist_ok=True)
 
-    # of_files = glob.glob(template_dir+'/openfast_run/*')
-    # for f in of_files:
-    #     dest_file = case_dir+'/openfast_run/'+f.split('/')[-1]
-    #     shutil.copy(Path(f), Path(dest_file))
-    # subprocess.run(["sed", "-i", "s/TIME_STEP/{}/".format(dt_openfast), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile.fst' ])
-    # subprocess.run(["sed", "-i", "s/OUTPUT_TIMESTEP/{}/".format(dt_driver), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile.fst' ])
-    # subprocess.run(["sed", "-i", "s/ROTOR_SPEED/{}/".format(case_data['rpm']), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile_ElastoDyn.dat' ])
-    # subprocess.run(["sed", "-i", "s/PITCH/{}/".format(case_data['pitch']), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile_ElastoDyn.dat' ])
-    # subprocess.run(["sed", "-i", "s/WIND_SPEED/{}/".format(case_data['wspd']), case_dir+'/openfast_run/IEA-15-240-RWT_InflowFile.dat' ])
-    # of_inp_file = Path(template_dir+'/openfast_run/inp.yaml')
-    # oif =  yaml.load(open(of_inp_file,'r'), Loader=yaml.UnsafeLoader)
-    # oif['dt_driver'] = dt_driver
-    # oif['t_end'] = 10.0 * period_rot
-    # oif['t_max'] = 100.0 * period_rot
-    # oif['Turbine0']['az_blend_mean'] = case_data['az_blend_mean']
-    # oif['Turbine0']['az_blend_delta'] = case_data['az_blend_delta']
-    # oif['Turbine0']['vel_mean'] = case_data['wspd']
-    # yaml.dump(oif, open(case_dir+'/openfast_run/inp.yaml','w'), default_flow_style=False)
+    of_files = glob.glob(template_dir+'/openfast_run/*')
+    for f in of_files:
+        dest_file = case_dir+'/openfast_run/'+f.split('/')[-1]
+        shutil.copy(Path(f), Path(dest_file))
+    subprocess.run(["sed", "-i", "s/TIME_STEP/{}/".format(dt_openfast), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile.fst' ])
+    subprocess.run(["sed", "-i", "s/OUTPUT_TIMESTEP/{}/".format(dt_driver), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile.fst' ])
+    subprocess.run(["sed", "-i", "s/ROTOR_SPEED/{}/".format(case_data['rpm']), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile_ElastoDyn.dat' ])
+    subprocess.run(["sed", "-i", "s/PITCH/{}/".format(case_data['pitch']), case_dir+'/openfast_run/IEA-15-240-RWT-Monopile_ElastoDyn.dat' ])
+    subprocess.run(["sed", "-i", "s/WIND_SPEED/{}/".format(case_data['wspd']), case_dir+'/openfast_run/IEA-15-240-RWT_InflowFile.dat' ])
+    of_inp_file = Path(template_dir+'/openfast_run/inp.yaml')
+    oif =  yaml.load(open(of_inp_file,'r'), Loader=yaml.UnsafeLoader)
+    oif['dt_driver'] = dt_driver
+    oif['t_end'] = 10.0 * period_rot
+    oif['t_max'] = 100.0 * period_rot
+    oif['Turbine0']['az_blend_mean'] = case_data['az_blend_mean']
+    oif['Turbine0']['az_blend_delta'] = case_data['az_blend_delta']
+    oif['Turbine0']['vel_mean'] = case_data['wspd']
+    yaml.dump(oif, open(case_dir+'/openfast_run/inp.yaml','w'), default_flow_style=False)
 
     nalu_inp_file = Path(glob.glob(template_dir+'/fsi_run/*nalu-*yaml')[0])
     with open(nalu_inp_file, 'r') as f:
